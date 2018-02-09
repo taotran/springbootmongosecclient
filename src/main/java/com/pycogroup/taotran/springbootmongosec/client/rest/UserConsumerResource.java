@@ -1,4 +1,4 @@
-package com.pycogroup.taotran.springbootmongosec.client.service;
+package com.pycogroup.taotran.springbootmongosec.client.rest;
 
 import com.pycogroup.taotran.springbootmongosec.client.config.custom.EnableAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static com.pycogroup.taotran.springbootmongosec.client.util.ConsumerUtils
 import static com.pycogroup.taotran.springbootmongosec.client.util.ConsumerUtils.toList;
 
 @RestController
-@RequestMapping("/client/api/users")
+@RequestMapping("/client/api/v1/users")
 public class UserConsumerResource {
 
     private static final String USER_LIST = "http://localhost:8080/api/v1/users";

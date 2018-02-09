@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
+@EnableAutoConfiguration
 public class App {
 
     public static void main(String[] args) {
