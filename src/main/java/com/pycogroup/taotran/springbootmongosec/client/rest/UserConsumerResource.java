@@ -13,7 +13,7 @@ import java.util.List;
 import static com.pycogroup.taotran.springbootmongosec.client.util.ConsumerUtils.buildHttpRequest;
 
 @RestController
-@RequestMapping("/client/api/users")
+@RequestMapping("/client/api/v1/users")
 public class UserConsumerResource {
 
     private static final String USER_LIST = "http://localhost:8080/api/v1/users";

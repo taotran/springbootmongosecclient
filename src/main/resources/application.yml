@@ -1,2 +1,34 @@
 server:
   port: 8090
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springmongosec_client
+    username: root
+    password:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    generate-ddl: true
+    ddl-auto: update
+
+
+
+
+###
+#   Kafka settings
+###
+kafka:
+#  bootstrap-servers: localhost:2222, localhost:3333
+  bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+  topic:
+    avro: springmongosecdemo
+
+###
+#   Logging configuration
+###
+logging:
+  level:
+    root: debug
