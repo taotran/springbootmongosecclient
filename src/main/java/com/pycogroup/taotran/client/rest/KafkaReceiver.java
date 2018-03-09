@@ -1,6 +1,6 @@
 package com.pycogroup.taotran.client.rest;
 
-import com.pycogroup.taotran.avroentity.Task;
+import com.pycogroup.taotran.client.entity.Task;
 import com.pycogroup.taotran.client.entity.TaskDTO;
 import com.pycogroup.taotran.client.service.task.TaskService;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ public class KafkaReceiver {
     @Autowired
     private TaskService taskService;
 
-    @KafkaListener(topics = "${kafka.topic.avro}")
+    @KafkaListener(topics = "${kafka.topic.json}")
     public void receive(Task task) {
 
         LOGGER.debug("Received Kafka payload = '{}'", task.toString());

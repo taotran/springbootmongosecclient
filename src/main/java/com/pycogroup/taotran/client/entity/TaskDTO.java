@@ -2,7 +2,6 @@ package com.pycogroup.taotran.client.entity;
 
 
 import com.pycogroup.taotran.client.enumeration.TaskPriority;
-import com.pycogroup.taotran.avroentity.Task;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +32,7 @@ public class TaskDTO extends AbstractEntity {
         setId(task.getId().toString());
         setTitle(task.getTitle().toString());
         setDescription(task.getDescription().toString());
-        setDueDate(new Date(task.getDueDate()));
+        setDueDate(task.getDueDate());
         setPriority(TaskPriority.valueOf(task.getPriority().toString()));
     }
 
