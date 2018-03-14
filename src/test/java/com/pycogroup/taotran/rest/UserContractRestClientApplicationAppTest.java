@@ -1,14 +1,16 @@
 package com.pycogroup.taotran.rest;
 
 import com.pycogroup.taotran.BaseAppTest;
-import com.pycogroup.taotran.client.entity.User;
+import com.pycogroup.taotran.client.entity.UserDTO;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.cloud.contract.stubrunner.junit.StubRunnerRule;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
+@ActiveProfiles({})
 public class UserContractRestClientApplicationAppTest extends BaseAppTest {
 
     private static final String GROUP_ID = "com.pycogroup.taotran.springmongo";
@@ -28,25 +30,25 @@ public class UserContractRestClientApplicationAppTest extends BaseAppTest {
         final RestTemplate restTemplate = new RestTemplate();
 
         //when:
-        final ResponseEntity<User[]> usersResponse = restTemplate.getForEntity("http://localhost:7777/api/v1/users", User[].class);
+        final ResponseEntity<UserDTO[]> usersResponse = restTemplate.getForEntity("http://localhost:7777/api/v1/userDTOS", UserDTO[].class);
 
         BDDAssertions.then(usersResponse.getStatusCodeValue()).isEqualTo(200);
 
-        final User[] users = usersResponse.getBody();
+        final UserDTO[] userDTOS = usersResponse.getBody();
 
-        BDDAssertions.then(users.length).isEqualTo(2);
+        BDDAssertions.then(userDTOS.length).isEqualTo(2);
 
-        BDDAssertions.then(users[0].getId()).isEqualTo("1");
-        BDDAssertions.then(users[0].getAge()).isEqualTo(8);
-        BDDAssertions.then(users[0].getUsername()).isEqualTo("testUser1");
-        BDDAssertions.then(users[0].getPassword()).isEqualTo("abcdef");
-        BDDAssertions.then(users[0].getAuthorities()).isEmpty();
+        BDDAssertions.then(userDTOS[0].getId()).isEqualTo("1");
+        BDDAssertions.then(userDTOS[0].getAge()).isEqualTo(8);
+        BDDAssertions.then(userDTOS[0].getUsername()).isEqualTo("testUser1");
+        BDDAssertions.then(userDTOS[0].getPassword()).isEqualTo("abcdef");
+        BDDAssertions.then(userDTOS[0].getAuthorities()).isEmpty();
 
-        BDDAssertions.then(users[1].getId()).isEqualTo("2");
-        BDDAssertions.then(users[1].getAge()).isEqualTo(9);
-        BDDAssertions.then(users[1].getUsername()).isEqualTo("testUser2");
-        BDDAssertions.then(users[1].getPassword()).isEqualTo("abcdefg");
-        BDDAssertions.then(users[1].getAuthorities()).isEmpty();
+        BDDAssertions.then(userDTOS[1].getId()).isEqualTo("2");
+        BDDAssertions.then(userDTOS[1].getAge()).isEqualTo(9);
+        BDDAssertions.then(userDTOS[1].getUsername()).isEqualTo("testUser2");
+        BDDAssertions.then(userDTOS[1].getPassword()).isEqualTo("abcdefg");
+        BDDAssertions.then(userDTOS[1].getAuthorities()).isEmpty();
 
     }
 }

@@ -1,12 +1,16 @@
 package com.pycogroup.taotran.client.entity;
 
 
-import com.pycogroup.taotran.avroentity.Task;
+import com.pycogroup.taotran.springbootmongosec.avroentity.Task;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,35 +21,46 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class User extends AbstractEntity implements UserDetails {
+@Entity
+@Table(name = "user")
+public class UserDTO extends AbstractEntity implements UserDetails {
 
 
     @NotNull
     @NotBlank
+    @Column
     private String username;
 
     @Length(min = 8, max = 100)
     @Valid
+    @Column
     private String password;
 
     @Min(10)
     @Max(100)
+    @Column
     private int age;
 
+    @Transient
     private List<Task> taskList;
 
+    @Transient
     private List<? extends GrantedAuthority> grantedAuthorities;
 
+    @Column
     private boolean accountNonExpired;
 
+    @Column
     private boolean accountNonLocked;
 
+    @Column
     private boolean credentialsNonExpired;
 
+    @Column
     private boolean enabled;
 
 
-    public User() { // NOSONAR
+    public UserDTO() { // NOSONAR
         super();
         this.accountNonExpired = true;
         this.accountNonLocked = true;
@@ -53,7 +68,7 @@ public class User extends AbstractEntity implements UserDetails {
         this.enabled = true;
     }
 
-    public User(Builder builder) {
+    public UserDTO(Builder builder) {
         this.username = builder.username;
         this.password = builder.password;
         this.grantedAuthorities = builder.grantedAuthorities;
@@ -66,18 +81,18 @@ public class User extends AbstractEntity implements UserDetails {
 
     }
 
-    public User(String username, String password, List<? extends GrantedAuthority> grantedAuthorities) {
+    public UserDTO(String username, String password, List<? extends GrantedAuthority> grantedAuthorities) {
         this();
         this.username = username;
         this.password = password;
         this.grantedAuthorities = grantedAuthorities;
     }
 
-    public User(String username, String password, GrantedAuthority... authorities) {
+    public UserDTO(String username, String password, GrantedAuthority... authorities) {
         this(username, password, Arrays.asList(authorities));
     }
 
-    public User(String username, String password) {
+    public UserDTO(String username, String password) {
         this(username, password, new ArrayList<>());
     }
 
@@ -196,8 +211,8 @@ public class User extends AbstractEntity implements UserDetails {
             return this;
         }
 
-        public User build() {
-            return new User(this);
+        public UserDTO build() {
+            return new UserDTO(this);
         }
 
 

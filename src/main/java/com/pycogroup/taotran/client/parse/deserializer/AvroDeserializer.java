@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.DatatypeConverter;
+import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -20,6 +21,11 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
     private static final Logger LOGGER = LoggerFactory.getLogger(AvroDeserializer.class);
 
     protected final Class<T> targetType;
+
+//    public AvroDeserializer() {
+//        targetType = (Class<T>) ((ParameterizedType) getClass()
+//                .getGenericSuperclass()).getActualTypeArguments()[0];
+//    }
 
     public AvroDeserializer(Class<T> targetType) {
         this.targetType = targetType;
