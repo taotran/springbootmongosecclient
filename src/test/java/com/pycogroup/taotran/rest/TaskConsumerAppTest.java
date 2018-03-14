@@ -1,17 +1,20 @@
 package com.pycogroup.taotran.rest;
 
 import com.pycogroup.taotran.BaseAppTest;
-import com.pycogroup.taotran.avroentity.Task;
+import com.pycogroup.taotran.client.entity.TaskDTO;
 import com.pycogroup.taotran.client.rest.KafkaReceiver;
+import com.pycogroup.taotran.client.service.task.TaskService;
 import com.pycogroup.taotran.config.serializer.AvroSerializer;
+import com.pycogroup.taotran.springbootmongosec.avroentity.Task;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -20,18 +23,21 @@ import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 
-
+@TestPropertySource(locations = "classpath:app.properties")
+//@Transactionalx
 public class TaskConsumerAppTest extends BaseAppTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskConsumerAppTest.class);
 
-    private static String RECEIVER_TOPIC = "springmongosecdemo";
+    private static String RECEIVER_TOPIC = "tasktopic";
 
     @ClassRule
     public static KafkaEmbedded kafkaEmbedded = new KafkaEmbedded(1, true, RECEIVER_TOPIC);
@@ -44,6 +50,9 @@ public class TaskConsumerAppTest extends BaseAppTest {
     @Autowired
     private KafkaReceiver receiver;
 
+    @MockBean
+    private TaskService taskService;
+
 
     @Before
     @Override
@@ -53,8 +62,8 @@ public class TaskConsumerAppTest extends BaseAppTest {
         //setup Kafka producer properties
 //        final Map<String, Object> senderProperties = KafkaTestUtils.senderProps(kafkaEmbedded.getBrokersAsString());
         final Map<String, Object> senderProperties = KafkaTestUtils.producerProps(kafkaEmbedded);
-//        senderProperties.put("key.serializer", StringSerializer.class);
-//        senderProperties.put("value.serializer", AvroSerializer.class);
+        senderProperties.put("key.serializer", StringSerializer.class);
+        senderProperties.put("value.serializer", AvroSerializer.class);
 
         // create Kafka producer factory
         final ProducerFactory<String, Task> producerFactory =
@@ -73,16 +82,14 @@ public class TaskConsumerAppTest extends BaseAppTest {
 
     }
 
-    @After
-    public void tearDown() {
-
-    }
-
 
     @Test
     public void testReceiveTask() throws Exception {
         // send object
         kafkaTemplate.sendDefault(sendingObject());
+
+        //stub
+        Mockito.when(taskService.save(any(TaskDTO.class))).thenReturn(new TaskDTO());
 
         LOGGER.debug("test-sender sent message='{}'", sendingObject());
 

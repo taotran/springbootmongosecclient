@@ -1,0 +1,22 @@
+#server:
+#  port: 8090
+#spring:
+#  datasource:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/springmongosec_client
+#    username: root
+#    password:
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#    generate-ddl: true
+#    ddl-auto: update
+
+
+kafka:
+#  bootstrap-servers: ${spring.embedded.kafka.brokers}
+  topic:
+    task: tasktopic
+    user: usertopic

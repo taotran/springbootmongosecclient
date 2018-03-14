@@ -2,7 +2,7 @@ package com.pycogroup.taotran.client.entity;
 
 
 import com.pycogroup.taotran.client.enumeration.TaskPriority;
-import com.pycogroup.taotran.avroentity.Task;
+import com.pycogroup.taotran.springbootmongosec.avroentity.Task;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

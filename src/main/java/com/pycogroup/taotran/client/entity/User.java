@@ -1,7 +1,7 @@
 package com.pycogroup.taotran.client.entity;
 
 
-import com.pycogroup.taotran.avroentity.Task;
+import com.pycogroup.taotran.springbootmongosec.avroentity.Task;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
